@@ -5,15 +5,18 @@ import * as pug from "pug";
 console.log(__dirname);
 
 const outFolder = "out/";
-const indexPath = path.join(outFolder, "index.html");
 
-const srcFolder = "src/";
-const srcIndexPath = path.join(srcFolder, "index.pug");
+const templatesFolder = "src/templates";
 
-// TODO: automatize page compilation
+const templateNames = ["index", "frappes"];
 
-fs.promises
-  .mkdir(path.dirname(indexPath), { recursive: true })
-  .then(() =>
-    fs.promises.writeFile(indexPath, pug.compileFile(srcIndexPath)())
-  );
+templateNames.forEach((templateName) => {
+  const templatePath = path.join(templatesFolder, templateName) + ".pug";
+  const filePath = path.join(outFolder, templateName) + ".html";
+
+  fs.promises
+    .mkdir(path.dirname(filePath), { recursive: true })
+    .then(() =>
+      fs.promises.writeFile(filePath, pug.compileFile(templatePath)())
+    );
+});

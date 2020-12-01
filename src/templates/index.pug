@@ -1,0 +1,11 @@
+extends shared/layout.pug
+
+block head
+  title Accueil
+
+block main
+  script.
+    const onChangeHandler = (e) => {      const date = new Date();      console.log(e.data, `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}`)}
+
+  input(oninput="onChangeHandler(event)")
+  a(href="frappes.html") Apprendre le clavier de Plover

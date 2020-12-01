@@ -1,11 +1,15 @@
 {
   "scripts": {
-    "build": "ts-node build.ts"
+    "build:pug": "ts-node build.ts",
+    "build:tsc": "tsc",
+    "build": "npm run build:pug",
+    "postbuild": "cp src/styles out -r; cp assets/exercises out/ -r"
   },
   "devDependencies": {
     "@types/node": "^14.14.10",
     "@types/pug": "^2.0.4",
     "pug": "^3.0.0",
-    "ts-node": "^9.0.0"
+    "ts-node": "^9.0.0",
+    "tsc": "^1.20150623.0"
   }
 }
