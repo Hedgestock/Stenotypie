@@ -1,4 +1,6 @@
-extends shared/layout.pug
+extends shared/layout.pug    
 
 block main
-  input(oninput="onChangeHandler(event)")
+  output#reference-stroke
+  input#answer-stroke(oninput="onChangeHandler(event)")
+  script(src="scripts/exercises.js")
