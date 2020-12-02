@@ -2,9 +2,9 @@
   "scripts": {
     "build:pug": "ts-node build.ts",
     "build:tsc": "(cd src/scripts && tsc)",
-    "tsc:watch": "(cd src/scripts && tsc -w)",
     "build": "npm run build:pug; npm run build:tsc",
     "postbuild": "cp src/styles out -r",
+    "tsc:watch": "(cd src/scripts && tsc -w)",
     "clean": "rm -rf out"
   },
   "devDependencies": {

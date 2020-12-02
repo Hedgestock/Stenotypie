@@ -1,0 +1,17 @@
+.exercises-main-frame {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.exercises-main-frame * {
+  font-family: "Courier New", Courier, monospace;
+}
+
+#reference-stroke {
+  font-size: 25vmin;
+}
+
+#answer-stroke {
+  font-size: 10vmin;
+  width: 80vw;
+}

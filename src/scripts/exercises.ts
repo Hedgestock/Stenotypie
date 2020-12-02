@@ -49,10 +49,22 @@ const lessons = {
 };
 
 const output = document.getElementById("reference-stroke");
+let strokeNumber = 0;
 
-output.innerText = lessons.lesson1.single["left-hand"][0];
+function nextStroke(strokeList: string[]) {
+  if (strokeNumber < strokeList.length) {
+    output.innerText = strokeList[strokeNumber];
+    strokeNumber++;
+  } else {
+    output.innerText = "done";
+  }
+}
+
+nextStroke(lessons.lesson1.single["left-hand"]);
 
 const onChangeHandler = (e) => {
-  console.log(e);
-  if (output.innerText == e.target.value) console.log("match");
+  if (output.innerText == e.target.value) {
+    nextStroke(lessons.lesson1.single["left-hand"]);
+    e.target.value = "";
+  }
 };

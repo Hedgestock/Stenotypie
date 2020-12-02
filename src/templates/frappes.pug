@@ -1,6 +1,7 @@
 extends shared/layout.pug    
 
 block main
-  output#reference-stroke
-  input#answer-stroke(oninput="onChangeHandler(event)")
+  div.exercises-main-frame
+    output#reference-stroke
+    input#answer-stroke(oninput="onChangeHandler(event)")
   script(src="scripts/exercises.js")
