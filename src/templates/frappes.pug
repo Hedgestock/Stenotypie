@@ -1,7 +1,11 @@
 extends shared/layout.pug    
 
 block main
+  select#lesson-selector
+    option(selected="true" disabled="disabled") Choisir une leçon
+  select#step-selector
+  output#theme
   div.exercises-main-frame
     output#reference-stroke
-    input#answer-stroke(oninput="onChangeHandler(event)")
+    input#answer-stroke(oninput="handleInput(event)")
   script(src="scripts/exercises.js")

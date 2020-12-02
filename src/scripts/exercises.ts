@@ -23,7 +23,7 @@ const lessons = {
     theme: ["P", "-P"],
     //prettier-ignore
     single: {
-      "left-hand": ["P", "S", "T", "A", "O", "T", "P", "S", "A", "O", "T", "p", "A", "S", "O", "A", "S", "P", "O", "T"],
+      "left-hand": ["P", "S", "T", "A", "O", "T", "P", "S", "A", "O", "T", "P", "A", "S", "O", "A", "S", "P", "O", "T"],
       "right-hand": [
         "-P", "-T", "-S", "U", "E", "E", "U", "E", "-T", "-S", "U", "-T", "-P", "E", "-S", "-P", "-T", "-S", "-P", "-S",
         "U", "E", "-T", "U", "-T", "-P", "E", "-S", "-P", "-T", "-P", "E", "U", "-T", "-S", "-T", "U", "-S", "E",
@@ -48,10 +48,26 @@ const lessons = {
   },
 };
 
+const theme = document.getElementById("theme");
 const output = document.getElementById("reference-stroke");
+const lessonSelector = document.getElementById(
+  "lesson-selector"
+) as HTMLSelectElement;
+const stepSelector = document.getElementById(
+  "step-selector"
+) as HTMLSelectElement;
 let strokeNumber = 0;
 
-function nextStroke(strokeList: string[]) {
+function nextStroke() {
+  const [stepNumber, handNumber] = stepSelector.value
+    .split("/")
+    .map((x) => parseInt(x));
+  const steps = Object.keys(lessons[lessonSelector.value]);
+  const step = steps[stepNumber];
+  const hands = Object.keys(lessons[lessonSelector.value][step]);
+  const hand = hands[handNumber];
+  const strokeList = lessons[lessonSelector.value][step][hand];
+
   if (strokeNumber < strokeList.length) {
     output.innerText = strokeList[strokeNumber];
     strokeNumber++;
@@ -60,11 +76,42 @@ function nextStroke(strokeList: string[]) {
   }
 }
 
-nextStroke(lessons.lesson1.single["left-hand"]);
-
-const onChangeHandler = (e) => {
-  if (output.innerText == e.target.value) {
-    nextStroke(lessons.lesson1.single["left-hand"]);
+const handleInput = (e) => {
+  if (output.innerText == e.target.value.trim()) {
+    nextStroke();
     e.target.value = "";
   }
 };
+
+Object.keys(lessons).forEach((lesson, i) => {
+  let option = document.createElement("option");
+  option.value = lesson;
+  option.innerText = `Leçon ${i + 1}`;
+  lessonSelector.appendChild(option);
+});
+
+["Touche seule", "Accord"].forEach((step, s) => {
+  ["Main gauche", "Main droite", "Les deux"].forEach((hand, h) => {
+    let option = document.createElement("option");
+    option.value = `${s}/${h}`;
+    option.innerText = `${step} - ${hand}`;
+    stepSelector.appendChild(option);
+  });
+});
+
+function setTheme() {
+  theme.innerText = lessons[lessonSelector.value].theme.join(" ");
+}
+
+function resetLesson() {
+  strokeNumber = 0;
+  nextStroke();
+}
+stepSelector.addEventListener("change", resetLesson);
+
+function changeLessonHandler() {
+  setTheme();
+  stepSelector.value = "0/0";
+  resetLesson();
+}
+lessonSelector.addEventListener("change", changeLessonHandler);
