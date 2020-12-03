@@ -72,8 +72,8 @@ function nextStroke() {
   const hand = hands[handNumber];
   const strokeList = lessons[lessonSelector.value].strokes[step][hand];
 
-  output.innerText = strokeList[strokeNumber];
   if (strokeNumber < strokeList.length) {
+    output.innerText = strokeList[strokeNumber];
     strokeNumber++;
   } else if (handNumber < hands.length) {
     setStep(stepNumber, handNumber + 1);
@@ -110,6 +110,7 @@ Object.keys(lessons).forEach((lesson, i) => {
 function setStep(stepNumber: number, handNumber: number) {
   stepSelector.value = `${stepNumber}/${handNumber}`;
   strokeNumber = 0;
+  nextStroke();
 }
 
 function setTheme() {
@@ -125,6 +126,5 @@ stepSelector.addEventListener("change", resetLesson);
 function changeLessonHandler() {
   setTheme();
   setStep(0, 0); // setStep ne doit pas remettre le compteur à 0 pcq resetLesson fait nextStroke donc strokeNumber++
-  resetLesson();
 }
 lessonSelector.addEventListener("change", changeLessonHandler);
